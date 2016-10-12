@@ -100,6 +100,7 @@ class BST<T extends Comparable<T>>
     while (where != null && retval == null)
     {
       int sign = where.getData().compareTo(target);
+      System.out.println("sign: " + sign);
       if (sign == 0)
         retval = where.getData();
       else if(sign > 0)
@@ -110,11 +111,88 @@ class BST<T extends Comparable<T>>
     return retval;
   }
  
-  public T delete(T target)
+  public void delete(T target)
   {
-    //to be written
-    return target;
+  		remove(target, root, null);
   }
+  
+  public T remove(T value, Node<T> node, Node<T> parent)
+  {
+  	T retval = null;
+  	if(node == null){
+  		return null;
+  	}
+  	int searchSign = node.getData().compareTo(value);
+   	if(0 < searchSign){
+  		remove(value, node.getLeft(), node);
+  	}
+  	else if(0 > searchSign){
+  		remove(value, node.getRight(), node);
+  	}
+  
+  	//this is the node we want to delete
+  	else{
+  		//no children of deleted node
+  		if(node.getRight() == null && node.getLeft() == null){
+  			if(node.getData().compareTo(parent.getLeft().getData()) == 0){
+  				retval = node.getLeft().getData();
+  				parent.setLeft(null);
+  				return retval;
+  			}
+  			else if(node = parent.getRight()){
+  				return parent.setRight(null);
+  			}
+  			}
+  		//only right child
+  		else if(node.getLeft() == null && node.getRight() != null){
+  			if(node = parent.getLeft()){
+  				return parent.setLeft(node.getRight);
+  			}
+  			else if(node = parent.getRight()){
+  				return parent.setRight(node.getRight);
+  			}
+  		}
+  		//only left child
+  		else if(node.getRight() == null && node.getLeft() != null){
+  			if(node = parent.getLeft()){
+  				return parent.setLeft(node.getLeft());
+  			}
+  			else if(node = parent.getRight()){
+  				return parent.setRight(node.getLeft());
+  			}
+  		}
+  		//two children
+
+
+
+  		}
+
+  		
+  	
+
+  		
+  	
+    return value;
+  }
+
+  public T min(Node<T> n)
+  {
+  	if(n.getLeft() == null){
+  		return n.getData();
+  	}else{
+  		return min(n.getLeft());
+  	}
+  }
+
+  public T max(Node<T> n)
+  {
+  	if(n.getRight() == null){
+  		return n.getData();
+  	}else{
+  		return min(n.getRight());
+  	}
+  }
+
 
   public String toString()
   {
